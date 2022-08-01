@@ -1,22 +1,19 @@
-class SlashComnand {
+class SlashCommand {
   constructor(client, opt) {
     this.client = client
-    this.name = opt.name
-  this.nameLocalizations = opt.nameLocalizations || {}
-    this.description = opt.description
-    this.descriptionLocalizations = opt.descriptionLocalizations || {}
-  this.type = opt.type || "CHAT_INPUT" 
-  this.options = opt.options || [{}]
-  this.defaultPermission = opt.defaultPermission || false
-  this.inVoice = opt.inVoice || false
-  this.developer = opt.developer || false
-  this.permissions = opt.permissions || []
-  this.clientPermissions = opt.clientPermissions || []
+    this.component = opt.component;
+    this.inVoice = opt.inVoice || false
   }
   
+  async load(i) {
+		const res = await this.run(i).catch((er) => er);
+
+		if (res instanceof Error) return console.log(i, res)
+		}
+
   async run(i) {
   throw new Error("There is some error while executing this command")
   }
 }
 
-module.exports = SlashComnand
+module.exports = SlashCommand

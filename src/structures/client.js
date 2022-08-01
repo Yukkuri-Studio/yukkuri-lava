@@ -1,22 +1,23 @@
-const { Client } = require("discord.js")
-const Event = require("../handler/event.js") 
-const Command = require("../handler/slash.js")
-const Music = require("../handler/poru.js")
+const { Client, IntentsBitField } = require('discord.js')
+const Loader = require("../handler/loader") 
+const Music = require("../handler/poru")
 const { Poru } = require('poru')
+
 
 class YukkuriClient extends Client {
   constructor() {
-    super({ intents: ["GUILD_MEMBERS", "GUILD_VOICE_STATES", "GUILD"]})
+  super({ intents: [ IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMembers, IntentsBitField.Flags.GuildVoiceStates ]})
     
-    this.event = new Event(this)
-    this.command = new Command(this)
+    this.loader = new Loader(this)
     this.music = new Music(this, Poru)
   }
   
   async init() {
-    this.event.loadEvents()
-    this.command.loadCommand()
+    this.loader.loadEvents()
+    this.loader.loadCommand()
     this.music.loadPoru()
-    this.login()
+    this.login(process.env.DISCORD_TOKEN)
   }
 }
+
+module.exports = YukkuriClient;

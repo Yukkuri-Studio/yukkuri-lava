@@ -23,13 +23,12 @@ class PoruHandler {
 
   async loadPoru() {
     const nodes = [{
-      id: "Poru Lava",
-      hostname: "node-au.devraiden.tech",
+      name: "main_node",
+      host:"node-au.devraiden.tech",
       port: 2000,
       password: "youshallnotpass"
     }]
     this.poru = new Poru(this.client, nodes)
-    
     
     const poru = await this.getFiles(`${this.path}/poru/**/*.js`)
     let i = 0
@@ -46,7 +45,7 @@ class PoruHandler {
       this.poru.on(Event.emiter, Event.load.bind(Event))
       i++
     }
-    console.log(`Loaded ${i} poru events.`)
+    console.log(`${i} Poru events loaded.`)
   }
 } 
 

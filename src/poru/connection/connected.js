@@ -1,4 +1,4 @@
-const Poru = require('../../structures/poru.js')
+const Poru = require('../../structures/poru')
 
 class NodeConnect extends Poru {
   constructor(client) {
@@ -12,3 +12,5 @@ class NodeConnect extends Poru {
     console.log(`Poru client has been connected to ${node.name}`)
   }
 }
+
+module.exports = NodeConnect

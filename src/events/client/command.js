@@ -1,19 +1,21 @@
-const Event = require("../../structures/event.js")
+const Event = require("../../structures/event")
+const { InteractionType } = require("discord.js")
 
 class Command extends Event {
   constructor(client) {
     super(client, {
       name: "Command Load",
-      emiter: "interactionCommand"
+      emiter: "interactionCreate"
     })
   }
   
   async run(i) {
-    if (!i.isCommand()) return
-    if (!i.member.voice.channel) return i.reply({ content: 'Please join to voice channel first before using me!', ephemeral: true })
-    
-    if (this.client.interactionCommand[i.commandName]) {
-      this.client.interactionCommand.load(i).catch((err) => console.log('Error while executing command', err.stuck))
+    if (i.type === InteractionType.ApplicationCommand) {
+      if (this.client.interactionCommand[i.commandName]) {
+        this.client.interactionCommand[i.commandName].load(i).catch((err) => console.log(err))
+      }
     }
   }
 }
+
+module.exports = Command
