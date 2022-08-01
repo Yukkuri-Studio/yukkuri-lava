@@ -18,7 +18,9 @@ class Leave extends Command {
      i.editReply({ content: 'You must be in voice channel before running this command.'})
     }
     
+    
     const player = this.client.music.poru.players.get(i.guild.id)
+    
   if (!player) return i.editReply("There is no music play on this server.")
   
   player.destroy()
