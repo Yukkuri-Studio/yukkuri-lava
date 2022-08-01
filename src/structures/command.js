@@ -12,7 +12,7 @@ class SlashCommand {
 		}
 
   async run(i) {
-  throw new Error("There is some error while executing this command")
+      throw new Error("There is some error while executing this command")
   }
 }
 

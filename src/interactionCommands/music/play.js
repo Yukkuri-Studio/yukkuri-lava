@@ -1,5 +1,5 @@
 const Command = require('../../structures/command')
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder, CommandInteraction } = require('discord.js')
 
 class Play extends Command {
   constructor(client) {
@@ -16,6 +16,10 @@ class Play extends Command {
     })
   }
   
+  /**
+   * 
+   * @param {CommandInteraction} i 
+   */
   async run(i) {
     await i.deferReply()
     const memberVoice = i.member.voice.channelId

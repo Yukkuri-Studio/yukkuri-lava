@@ -6,7 +6,7 @@ const { Poru } = require('poru')
 
 class YukkuriClient extends Client {
   constructor() {
-  super({ intents: [ IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMembers, IntentsBitField.Flags.GuildVoiceStates ]})
+  super({ intents: [ 'Guilds', 'GuildMembers', 'GuildVoiceStates' ]})
     
     this.loader = new Loader(this)
     this.music = new Music(this, Poru)

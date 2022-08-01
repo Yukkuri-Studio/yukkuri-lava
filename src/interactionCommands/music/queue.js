@@ -11,17 +11,18 @@ class Queue extends Command {
   }
 
   async run(i) {
+    await i.deferReply();
+
+
     const player = this.client.music.poru.players.get(i.guild.id);
 
     if (!player) {
-      await i.deferReply();
-
       i.editReply("No queue");
-      return;
-    }
 
-    console.log(player.queue);
-    i.reply("Queue");
+      return;
+    } else {
+      i.editReply(player.queue.map(x => `\`${x.info.title}\``)).join('\n');
+    }
   }
 }
 
