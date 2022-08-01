@@ -1,7 +1,7 @@
 {
   "name": "my-node-app",
   "version": "1.0.0",
-  "script": {
+  "scripts": {
     "start": "node -r dotenv/config ./src/index.js"
   },
   "dependencies": {
