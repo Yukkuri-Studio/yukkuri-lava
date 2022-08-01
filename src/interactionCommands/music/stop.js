@@ -23,7 +23,8 @@ class Stop extends Command {
     
   if (!player) return i.editReply("There is no music play on this server.")
   
-  player.stop()
+    player.queue.clear();
+    player.stop()
     
     const embed = new EmbedBuilder()
     .setColor('Red')

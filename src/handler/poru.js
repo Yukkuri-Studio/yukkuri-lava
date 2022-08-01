@@ -24,9 +24,9 @@ class PoruHandler {
   async loadPoru() {
     const nodes = [{
       name: "main_node",
-      host:"node-au.devraiden.tech",
+      host:"connect.freelavalink.ga",
       port: 2000,
-      password: "youshallnotpass"
+      password: "www.freelavalink.ga"
     }]
     this.poru = new Poru(this.client, nodes)
     
