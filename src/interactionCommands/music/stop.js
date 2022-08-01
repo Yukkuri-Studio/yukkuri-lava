@@ -19,7 +19,7 @@ class Stop extends Command {
       return
     }
     
-    const player = this.client.music.poru.get(i.guild.id)
+    const player = this.client.music.poru.players.get(i.guild.id)
   if (!player) return i.editReply("There is no music play on this server.")
   
   player.stop()
