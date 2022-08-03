@@ -53,7 +53,7 @@ class Lyrics extends Command {
         await i.reply({ content: "_ _" })
         lyrics.forEach(async (x) => {
           embed.setDescription(x)
-          await i.reply({ embeds: [embed] })
+          i.channel.send({ embeds: [embed] })
         });
         return
       }

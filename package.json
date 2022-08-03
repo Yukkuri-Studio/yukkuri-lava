@@ -2,6 +2,7 @@
   "name": "my-node-app",
   "version": "1.0.0",
   "scripts": {
+    "install": "npm install",
     "start": "node -r dotenv/config ./src/index.js"
   },
   "dependencies": {
