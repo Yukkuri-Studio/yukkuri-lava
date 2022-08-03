@@ -5,9 +5,12 @@
     "start": "node -r dotenv/config ./src/index.js"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "discord.js": "^14.0.3",
     "glob": "^8.0.3",
+    "lodash": "^4.17.21",
     "ms": "^2.1.3",
+    "node-fetch": "^2.6.7",
     "poru": "^3.0.1"
   },
   "devDependencies": {

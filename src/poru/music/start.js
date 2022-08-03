@@ -14,7 +14,7 @@ class Start extends Poru {
     
     const embed = new EmbedBuilder()
     .setColor('Red')
-    .setTitle(`Startplaying ${track.info.title}`)
+    .setTitle(`Start playing ${track.info.title}`)
     .addFields([
       {
         name: "Artist:",

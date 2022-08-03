@@ -2,7 +2,6 @@ const Command = require("../../structures/command");
 const {
   SlashCommandBuilder,
   EmbedBuilder,
-  CommandInteraction,
 } = require("discord.js");
 
 class Leave extends Command {

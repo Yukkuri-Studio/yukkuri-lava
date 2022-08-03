@@ -1,17 +1,23 @@
 const Command = require("../../structures/command");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
-class Stop extends Command {
+class Remove extends Command {
   constructor(client) {
     super(client, {
       component: new SlashCommandBuilder()
-        .setName("stop")
-        .setDescription("Stopthe music and clearing the queue"),
+        .setName("remove")
+        .setDescription("Removing music from the queue")
+        .addNumberOption((opt) =>
+          opt
+            .setName("song")
+            .setDescription("Remove music from the queue list")
+            .setRequired(true)
+        ),
+      inVoice: true,
     });
   }
 
   async run(i) {
-    await i.deferReply();
     const memberVoice = i.member.voice.channelId;
 
     if (this.inVoice && !memberVoice) {
@@ -23,18 +29,17 @@ class Stop extends Command {
 
     const player = this.client.music.poru.players.get(i.guild.id);
 
-    if (!player) return i.editReply("There is no music play on this server.");
+    if (!player) return i.reply("There is no music playing right now");
 
-    player.queue.clear();
-    player.stop();
+    const song = i.options.getNumber("song");
 
+    player.queue.remove(song - 1);
 
     const embed = new EmbedBuilder()
       .setColor("Red")
-      .setDescription("Clearing queue and stoping music");
-
-    i.editReply({ embeds: [embed] });
+      .setDescription("Successfully removing the song");
+    i.reply({ embeds: [embed] });
   }
 }
 
-module.exports = Stop;
+module.exports = Remove;
