@@ -46,3 +46,4 @@ class NowPlay extends Command {
 }
 
 module.exports = NowPlay;
+

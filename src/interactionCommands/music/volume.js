@@ -1,6 +1,7 @@
 const Command = require("../../structures/command");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
+
 class Volume extends Command {
   constructor(client) {
     super(client, {
@@ -54,3 +55,4 @@ class Volume extends Command {
 }
 
 module.exports = Volume;
+

@@ -28,6 +28,7 @@ class Stop extends Command {
     player.queue.clear();
     player.stop();
 
+
     const embed = new EmbedBuilder()
       .setColor("Red")
       .setDescription("Clearing queue and stoping music");
