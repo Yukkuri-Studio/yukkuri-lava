@@ -1,16 +1,16 @@
 const Command = require("../../structures/command");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
-class Volume extends Command {
+class Remove extends Command {
   constructor(client) {
     super(client, {
       component: new SlashCommandBuilder()
-        .setName("volume")
-        .setDescription("Settings music volume")
+        .setName("remove")
+        .setDescription("Removing music from the queue")
         .addNumberOption((opt) =>
           opt
-            .setName("value")
-            .setDescription("Set music volume between 0-100")
+            .setName("song")
+            .setDescription("Remove music from the queue list")
             .setRequired(true)
         ),
       inVoice: true,
@@ -21,7 +21,7 @@ class Volume extends Command {
     const memberVoice = i.member.voice.channelId;
 
     if (this.inVoice && !memberVoice) {
-      await i.editReply(
+      await i.reply(
         "You must be in voice channel before running this command."
       );
       return;
@@ -29,28 +29,17 @@ class Volume extends Command {
 
     const player = this.client.music.poru.players.get(i.guild.id);
 
-    if (!player)
-      return i.reply({
-        ephemeral: true,
-        content: "You must be in voice channel before running this command",
-      });
+    if (!player) return i.reply("There is no music playing right now");
 
-    let vol = i.options.getNumber("value");
+    const song = i.options.getNumber("song");
 
-    if (vol > 100) {
-      i.reply('Volume can not be greater than 100');
-      vol = 100
-    }
-    else if (vol < 0) vol = 0;
-
-    player.setVolume(vol);
+    player.queue.remove(song - 1);
 
     const embed = new EmbedBuilder()
       .setColor("Red")
-      .setDescription(`Volume set to \`${vol}\`%`);
-
+      .setDescription("Successfully removing the song");
     i.reply({ embeds: [embed] });
   }
 }
 
-module.exports = Volume;
+module.exports = Remove;
