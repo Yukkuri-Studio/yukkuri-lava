@@ -1,2 +1,4 @@
 # Yukkuri Music
-A stable musiclavalink discord bot using slash command.
+A stable discord music bot lavalink using [poru](https://npmjs.com/package/poru)
+
+#🚧 Status

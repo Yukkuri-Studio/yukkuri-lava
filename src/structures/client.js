@@ -2,6 +2,7 @@ const { Client, IntentsBitField } = require('discord.js')
 const Loader = require("../handler/loader") 
 const Music = require("../handler/poru")
 const { Poru } = require('poru')
+const config = require("../settings/config.json")
 
 
 class YukkuriClient extends Client {
@@ -10,6 +11,7 @@ class YukkuriClient extends Client {
     
     this.loader = new Loader(this)
     this.music = new Music(this, Poru)
+    this.config = config
   }
   
   async init() {
