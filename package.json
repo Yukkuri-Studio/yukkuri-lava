@@ -1,5 +1,5 @@
-{
-  "name": "my-node-app",
+ {
+  "name": "yukkuri-lava",
   "version": "1.0.0",
   "scripts": {
     "start": "node -r dotenv/config ./src/index.js"

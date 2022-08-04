@@ -1,5 +1,12 @@
 {
+  // Lavalink Host
   "LAVA_HOST": "",
+  // Lavalink Password
   "LAVA_PASS": "",
-  "LAVA_PORT": 2008
+  // Lavalink Port
+  "LAVA_PORT": 2008,
+  // NODE ENV | production or development
+  "NODE": "",
+  // GUILD DEV development NODE ENV
+  "GUILD_DEV": [""]
 }

@@ -1,7 +1,6 @@
 const glob = require('glob')
 const path = require('node:path')
 const { Poru } = require('poru')
-const config = require("../settings/config.json")
 
 class PoruHandler {
   constructor(client, poru) {
@@ -25,9 +24,9 @@ class PoruHandler {
   async loadPoru() {
     const nodes = [{
       name: "main_node",
-      host: config.LAVA_HOST,
-      port: config.LAVA_PORT,
-      password: config.LAVA_PASS
+      host: this.client.config.LAVA_HOST,
+      port: this.client.config.LAVA_PORT,
+      password: this.client.config.LAVA_PASS
     }]
     this.poru = new Poru(this.client, nodes)
     
