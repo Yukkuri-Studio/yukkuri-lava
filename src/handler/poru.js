@@ -23,7 +23,7 @@ class PoruHandler {
 
   async loadPoru() {
     const nodes = [{
-      name: "main_node",
+      name: "yukkuri",
       host: this.client.config.LAVA_HOST,
       port: this.client.config.LAVA_PORT,
       password: this.client.config.LAVA_PASS
