@@ -6,7 +6,7 @@ class Shuffle extends Command {
     super(client, {
       component: new SlashCommandBuilder()
         .setName("shuffle")
-        .setDescription("Shuffleall music o queue"),
+        .setDescription("Shuffle music on queue"),
       inVoice: true,
     });
   }

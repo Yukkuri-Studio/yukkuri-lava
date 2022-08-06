@@ -6,7 +6,7 @@ class Stop extends Command {
     super(client, {
       component: new SlashCommandBuilder()
         .setName("stop")
-        .setDescription("Stopthe music and clearing the queue"),
+        .setDescription("Stop the music and clearing the queue"),
     });
   }
 
