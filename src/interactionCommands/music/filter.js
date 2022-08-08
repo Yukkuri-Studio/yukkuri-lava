@@ -17,14 +17,6 @@ const filterList = [
   "clear",
 ];
 
-const filter = []
-
-for (const fil of filterList) {
-    filter.push({
-        name: fil,
-        value: fil
-    })
-}
 
 class Filter extends Command {
   constructor(client) {
@@ -40,7 +32,58 @@ class Filter extends Command {
             )
             .setRequired(true)
             .addChoices(
-              filter
+              {
+                name: "8d",
+                value: "8d",
+              },
+              {
+                name: "bassboost",
+                value: "bassboost",
+              },
+              {
+                name: "karaoke",
+                value: "karaoke",
+              },
+              {
+                name: "timescale",
+                value: "timescale",
+              },
+              {
+                name: "tremelo",
+                value: "tremelo",
+              },
+              {
+                name: "vibrato",
+                value: "vibrato",
+              },
+              {
+                name: "rotation",
+                value: "rotation",
+              },
+              {
+                name: "distortion",
+                value: "distortion",
+              },
+              {
+                name: "channelmix",
+                value: "channelmix",
+              },
+              {
+                name: "lowpass",
+                value: "lowpass",
+              },
+              {
+                name: "nightcore",
+                value: "nightcore",
+              },
+              {
+                name: "vaporwave",
+                value: "vaporwave",
+              },
+              {
+                name: "clear",
+                value: "clear",
+              }
             )
         ),
       inVoice: true,
