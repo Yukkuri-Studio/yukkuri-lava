@@ -39,13 +39,13 @@ class Play extends Command {
     const resolve = await this.client.music.poru.resolve(
       i.options.getString("track")
     );
-
+    
     const { loadType, tracks, playlistInfo } = resolve;
 
     try {
             if (loadType === 'PLAYLIST_LOADED') {
 				for (const track of resolve.tracks) {
-					track.info.requester = interaction.member;
+					track.info.requester = i.member;
 					player.queue.add(track);
 				}
 
@@ -53,7 +53,7 @@ class Play extends Command {
 					.setColor('White')
 					.setDescription(`Added \`${tracks.length}\` tracks from ${playlistInfo.name}`);
 
-				await interaction.reply({
+				await i.editReply({
 					embeds: [embed],
 				});
 
@@ -64,7 +64,7 @@ class Play extends Command {
 
 			if (loadType === 'SEARCH_RESULT' || loadType === 'TRACK_LOADED') {
 				const track = tracks.shift();
-				track.info.requester = interaction.member;
+				track.info.requester = i.member;
 
 				player.queue.add(track);
 
@@ -72,7 +72,7 @@ class Play extends Command {
 					.setColor('White')
 					.setDescription(`Added [${track.info.title}](${track.info.uri})`);
 
-				await interaction.reply({
+				await i.editReply({
 					embeds: [embed],
 				});
 				if (!player.isPlaying && !player.isPaused) return player.play();
@@ -80,6 +80,7 @@ class Play extends Command {
 				return;
 			}
     } catch (er) {
+        console.log(er);
       i.editReply({ content: "No result found." });
     }
   }
