@@ -58,13 +58,13 @@ class Loader {
         
         if (this.client.config.NODE === "delete-production") {
         await this.client.application.commands.set([]);
-        console.log("Slash command production has been registered.");
+        console.log("Deleting slash command production has been registered.");
         return;
         }
         
         if (this.client.config.NODE === "delete-development") {
         await this.client.application.commands.set([], this.client.config.GUILD_DEV);
-        console.log("Slash command production has been registered.");
+        console.log("Deleting slash command development has been registered.");
         return;
         }
 
