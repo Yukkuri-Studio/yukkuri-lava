@@ -17,6 +17,7 @@ const filterList = [
   "clear",
 ];
 
+
 class Filter extends Command {
   constructor(client) {
     super(client, {
@@ -208,6 +209,23 @@ class Filter extends Command {
 
       case "clear": {
         player.filters.clearFilters();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         console.log("Cleared")
 
         embed.setDescription("Filters has been cleared");
