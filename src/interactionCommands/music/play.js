@@ -43,43 +43,42 @@ class Play extends Command {
     const { loadType, tracks, playlistInfo } = resolve;
 
     try {
-      switch (loadType) {
-        case "PLAYLIST_LOADED": {
-          for (const track of resolve.tracks) {
-            track.info.requester = i.member;
-            player.queue.add(track);
-          }
+            if (loadType === 'PLAYLIST_LOADED') {
+				for (const track of resolve.tracks) {
+					track.info.requester = interaction.member;
+					player.queue.add(track);
+				}
 
-          const embed = new EmbedBuilder()
-            .setColor("White")
-            .setDescription(
-              `Added \`${tracks.length}\` tracks from ${playlistInfo.name}`
-            );
+				const embed = new EmbedBuilder()
+					.setColor('White')
+					.setDescription(`Added \`${tracks.length}\` tracks from ${playlistInfo.name}`);
 
-          await i.editReply({
-            embeds: [embed],
-          });
-          if (!player.isPlaying && !player.isPaused) return player.play();
-          break;
-        }
+				await interaction.reply({
+					embeds: [embed],
+				});
 
-        case "SEARCH_RESULT" || "TRACK_LOADED": {
-          const track = tracks.shift();
-          track.info.requester = i.member;
+				if (!player.isPlaying && !player.isPaused) return player.play();
 
-          player.queue.add(track);
+				return;
+			}
 
-          const embed = new EmbedBuilder()
-            .setColor("White")
-            .setDescription(`Added [${track.info.title}](${track.info.uri})`);
+			if (loadType === 'SEARCH_RESULT' || loadType === 'TRACK_LOADED') {
+				const track = tracks.shift();
+				track.info.requester = interaction.member;
 
-          await i.editReply({
-            embeds: [embed],
-          });
-          if (!player.isPlaying && !player.isPaused) return player.play();
-          break;
-        }
-      }
+				player.queue.add(track);
+
+				const embed = new EmbedBuilder()
+					.setColor('White')
+					.setDescription(`Added [${track.info.title}](${track.info.uri})`);
+
+				await interaction.reply({
+					embeds: [embed],
+				});
+				if (!player.isPlaying && !player.isPaused) return player.play();
+
+				return;
+			}
     } catch (er) {
       i.editReply({ content: "No result found." });
     }
