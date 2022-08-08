@@ -26,7 +26,11 @@ class AutoPlay extends Command {
     
     await player.setAutoplay(!player.isAutoplay, player.currentTrack)
     
-    i.reply("Enabled")
+    const embed = new EmbedBuilder()
+    .setColor("Red")
+    .setDescription(`Auto Play has been \`${player.isAutoplay ? "Enable" : "Disable"}\``)
+    
+    i.reply({ embeds: [embed] });
   }
 }
 
