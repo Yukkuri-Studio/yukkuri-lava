@@ -28,6 +28,7 @@ class PoruHandler {
       port: this.client.config.LAVA_PORT,
       password: this.client.config.LAVA_PASS
     }]
+
     this.poru = new Poru(this.client, nodes)
     
     const poru = await this.getFiles(`${this.path}/poru/**/*.js`)
