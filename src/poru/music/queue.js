@@ -15,7 +15,7 @@ class Queue extends Poru {
         const channel = this.client.channels.cache.get(player.textChannel)
         const voice = this.client.channels.cache.get(player.voiceChannel);
         const voiceSize = voice.members.filter((x) => !x.user.bot).size;
-        
+        console.log(voiceSize);
         const leaving = setInterval(() => {
                 if (voiceSize <= 1) {
                 embed.setColor("Red")
