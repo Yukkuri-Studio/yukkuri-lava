@@ -33,6 +33,7 @@ class Search extends Command {
             voiceChannel: memberVoice,
             textChannel: i.channel.id,
             deaf: true,
+            volume: 50
         });
         
         const youtube = new Client()
