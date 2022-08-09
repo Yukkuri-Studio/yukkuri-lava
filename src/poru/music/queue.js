@@ -9,7 +9,7 @@ class Queue extends Poru {
         })
     }
     
-    async run(palyer, track, data) {
+    async run(player, track, data) {
         const embed = new EmbedBuilder()
         
         const channel = this.client.channels.cache.get(player.textChannel)
