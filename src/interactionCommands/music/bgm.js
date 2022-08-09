@@ -47,7 +47,7 @@ class Bgm extends Command {
     if(!song) return i.editReply("I can't find that playlist")
     const resolve = await this.client.music.poru.resolve(song.link);
     const { loadType, tracks, playlistInfo } = resolve;
-    
+
     try {
       if (loadType === 'PLAYLIST_LOADED') {
 				for (const track of resolve.tracks) {
