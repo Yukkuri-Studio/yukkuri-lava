@@ -50,7 +50,7 @@ class Play extends Command {
 				}
 
 				const embed = new EmbedBuilder()
-					.setColor('White')
+					.setColor('Red')
 					.setDescription(`Added \`${tracks.length}\` tracks from ${playlistInfo.name}`);
 
 				await i.editReply({
@@ -69,7 +69,7 @@ class Play extends Command {
 				player.queue.add(track);
 
 				const embed = new EmbedBuilder()
-					.setColor('White')
+					.setColor('Red')
 					.setDescription(`Added [${track.info.title}](${track.info.uri})`);
 
 				await i.editReply({

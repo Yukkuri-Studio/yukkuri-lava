@@ -1,6 +1,7 @@
 const Command = require("../../structures/command");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const ms = require("ms");
+const bar = require("string-progressbar")
 
 class NowPlay extends Command {
   constructor(client) {
@@ -15,35 +16,27 @@ class NowPlay extends Command {
     const player = this.client.music.poru.players.get(i.guild.id);
 
     if (!player) return i.reply("No music playing ight now.");
-
+  
+    const track = player.currentTrack.info
+    const dur = track.length
+    const pos = player.position
+    const pro = bar.splitBar(dur, pos, 20)[0]
+    const durationleft = dur - pos
+    
     const embed = new EmbedBuilder()
       .setColor("Red")
-      .setTitle(`Now Playing ${player.currentTrack.info.title}`)
-      .addFields([
-        {
-          name: "Author",
-          value: player.currentTrack.info.author,
-          inline: true,
-        },
-        {
-          name: "Source",
-          value: player.currentTrack.info.sourceName,
-          inline: true,
-        },
-        {
-          name: "Duration",
-          value: `${ms(player.currentTrack.info.length)}`,
-        },
-        {
-          name: "Stream",
-          value: player.currentTrack.isStream ? "Yes" : "No",
-        },
-      ])
-      .setImage(player.currentTrack.info.image);
+      .setTitle(track.title)
+      .setURL(track.uri)
+      .setThumbnail(track.image)
+      .setDescription([
+        `**Duration**: ${ms(dur)}`,
+        `**Artist**: ${track.author}`,
+        `**Stream**: ${track.isStream ? "Yes" : "No"}`,
+        `${pro}  ${ms(durationleft, { long: true })} left`
+      ].join("\n"))
 
     i.reply({ embeds: [embed] });
   }
 }
 
 module.exports = NowPlay;
-
