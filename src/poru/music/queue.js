@@ -16,15 +16,15 @@ class Queue extends Poru {
         const voice = this.client.channels.cache.get(player.voiceChannel);
         const voiceSize = voice.members.filter((x) => !x.user.bot).size;
         
-        const leaveling = setInterval(() => {
+        const leaving = setInterval(() => {
                 if (voiceSize <= 1) {
                 embed.setColor("Red")
                 embed.setDescription("There is no one here, leaving voice channel.")
                 player.destroy();
-                return channel.send({ embeds: [embed] });   
+                channel.send({ embeds: [embed] }); 
+                return clearInterval(leaving);
                 }    
             }, 2e3)
-        clearInterval(leaveling);
     }
 }
 
