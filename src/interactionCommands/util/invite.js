@@ -17,17 +17,17 @@ class Invite extends Command {
         .setEmoji("936926209147809802")
         .setURL(`https://discord.com/api/oauth2/authorize?client_id=${this.client.user.id}&permissions=8&scope=bot%20applications.commands`)
         
-                const githubSponsor = new ButtonBuilder()
+        const githubSponsor = new ButtonBuilder()
         .setStyle(ButtonStyle.Link)
         .setLabel("GitHub Sponsors!")
         .setEmoji("918318537532137532")
-        .setURL(`https://discord.com/api/oauth2/authorize?client_id=${this.client.user.id}&permissions=8&scope=bot%20applications.commands`)
+        .setURL(`https://github.com/sponsors/ameliakiara`)
         
-                const patreonButton = new ButtonBuilder()
+        const patreonButton = new ButtonBuilder()
         .setStyle(ButtonStyle.Link)
         .setLabel("Patreon!")
         .setEmoji("918318805074210836")
-        .setURL(`https://discord.com/api/oauth2/authorize?client_id=${this.client.user.id}&permissions=8&scope=bot%20applications.commands`)
+        .setURL(`https://patreon.com/ameliakiara`)
         
         const row = new ActionRowBuilder().addComponents([ inviteButton, githubSponsor, patreonButton ]);
         
