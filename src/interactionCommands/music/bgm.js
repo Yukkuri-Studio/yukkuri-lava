@@ -1,23 +1,27 @@
 const Command = require("../../structures/command");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const playlist = require("../../settings/playlist.json")
 
-
-class Play extends Command {
+class Bgm extends Command {
   constructor(client) {
     super(client, {
       component: new SlashCommandBuilder()
-        .setName("play")
-        .setDescription("Play music from everywhare")
-        .addStringOption((opt) =>
-          opt
-            .setName("track")
-            .setDescription("Insert <title | link | playlist> to play music")
-            .setRequired(true)
-        ),
-      inVoice: true,
-    });
+      .setName("bgm")
+      .setDescription("Play a bgm playlist")
+      .addStringOption((opt) => opt
+      .setName("name")
+      .setDescription("Select the bgm above")
+      .addChoices(
+        { name: "NSC", value: "NSC" },
+        { name: "LOFI", value: "LOFI" },
+        { name: "ANIME", value: "ANIME" },
+        { name: "POPPUNK", value: "POPPUNK" },
+        { name: "TOPCHARTS", value: "TOPCHARTS" },
+      )
+      .setRequired(true))
+    })
   }
-
+  
   async run(i) {
     await i.deferReply();
     const memberVoice = i.member.voice.channelId;
@@ -36,15 +40,16 @@ class Play extends Command {
       deaf: true,
       volume: 50
     });
-
-    const resolve = await this.client.music.poru.resolve(
-      i.options.getString("track")
-    );
     
-    const { loadType, tracks, playlistInfo } = resolve;
+    const opt = i.options.getString("name")
+    const song = playlist.find(x => x.name === opt)
 
+    if(!song) return i.editReply("I can't find that playlist")
+    const resolve = await this.client.music.poru.resolve(song.link);
+    const { loadType, tracks, playlistInfo } = resolve;
+    
     try {
-            if (loadType === 'PLAYLIST_LOADED') {
+      if (loadType === 'PLAYLIST_LOADED') {
 				for (const track of resolve.tracks) {
 					track.info.requester = i.member;
 					player.queue.add(track);
@@ -62,29 +67,10 @@ class Play extends Command {
 
 				return;
 			}
-
-			if (loadType === 'SEARCH_RESULT' || loadType === 'TRACK_LOADED') {
-				const track = tracks.shift();
-				track.info.requester = i.member;
-
-				player.queue.add(track);
-
-				const embed = new EmbedBuilder()
-					.setColor('Red')
-					.setDescription(`Added [${track.info.title}](${track.info.uri})`);
-
-				await i.editReply({
-					embeds: [embed],
-				});
-				if (!player.isPlaying && !player.isPaused) return player.play();
-
-				return;
-			}
-    } catch (er) {
-        console.log(er);
-      i.editReply({ content: "No result found." });
+    } catch (e) {
+      console.log(e)
     }
   }
 }
 
-module.exports = Play;
+module.exports = Bgm

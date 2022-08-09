@@ -12,8 +12,6 @@ class Ping extends Command {
   
   async run(i) {
     const ws = Date.now() - i.createdTimestamp
-    const nodes = this.client.music.poru.nodes.get("yukkuri")
-    console.log(nodes.stats) 
     const embed = new EmbedBuilder()
     .setColor("Red")
     .setDescription([
