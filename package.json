@@ -9,10 +9,13 @@
     "discord.js": "^14.0.3",
     "glob": "^8.0.3",
     "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "moment-duration-format": "^2.3.2",
     "ms": "^2.1.3",
     "node-fetch": "^2.6.7",
     "poru": "github:ameliakiara/poru-dev",
     "string-progressbar": "^1.0.4",
+    "systeminformation": "^5.12.4",
     "youtubei": "^1.0.0-rc.4"
   },
   "devDependencies": {

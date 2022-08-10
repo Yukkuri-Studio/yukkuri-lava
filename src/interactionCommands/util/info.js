@@ -1,6 +1,10 @@
 const Command = require("../../structures/command");
-const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, version } = require("discord.js");
 const ms = require("ms")
+const moment = require("moment")
+require("moment-duration-format");
+const os = require('os')
+const si = require('systeminformation');
 
 class Info extends Command {
   constructor(client) {
@@ -44,6 +48,11 @@ class Info extends Command {
     
     const row = new ActionRowBuilder().addComponents([ inviteButton, githubSponsor, patreonButton ]);
     
+    const cpu = await si.cpu();
+    const mem = await si.mem()
+    console.log(mem)
+    let users = 0
+    this.client.guilds.cache.forEach((g) => users += g.memberCount)
         const info = new EmbedBuilder()
     .setColor("Red")
     .setTitle(`${this.client.user.username}'s Status`)
@@ -53,9 +62,26 @@ class Info extends Command {
       {
         name: "Client",
         value: [
-          `Servers: ${this.client.guilds.cache.size}`,
-          `Users: ${this.client.users.cache.size}`,
-          `Channels: ${this.client.channels.cache.size}`
+          `\u200b Servers: ${this.client.guilds.cache.size}`,
+          `\u200b Users: ${users}`,
+          `\u200b Channels: ${this.client.channels.cache.size}`,
+          `\u200b Discord.JS: ${version}`,
+          `\u200b Uptime: ${moment(this.client.ws.uptime).format("D [days], H [hrs], m [mins], s [secs]")}`
+        ].join("\n")
+      },
+      {
+        name: "System",
+        value: [
+          "**CPU**",
+          `\u200b Model: ${os.cpus()[0].model}`,
+          `\u200b Cores: ${cpu.cores}`,
+          `\u200b Speed: ${os.cpus()[0].speed} Mhz`,
+          "**MEMORY**",
+          `\u200b Total: ${this.formatByteSize(mem.total)}`,
+          `\u200b Active: ${this.formatByteSize(mem.active)}`,
+          `\u200b Free: ${this.formatByteSize(mem.free)}`,
+          `\u200b Used: ${this.formatByteSize(mem.used)}`,
+          `\u200b Available: ${this.formatByteSize(mem.available)}`
         ].join("\n")
       },
       {
