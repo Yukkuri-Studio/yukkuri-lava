@@ -39,10 +39,7 @@ class Volume extends Command {
 
     let vol = i.options.getNumber("value");
 
-    if (vol > 100) {
-      i.reply('Volume can not be greater than 100');
-      vol = 100
-    }
+    if (vol > 100) vol = 100
     else if (vol < 0) vol = 0;
 
     player.setVolume(vol);
