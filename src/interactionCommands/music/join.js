@@ -8,6 +8,7 @@ class Join extends Command {
         .setName("join")
         .setDescription("Invite me to join to your voice channel."),
       inVoice: true,
+      category: "Music"
     });
   }
 

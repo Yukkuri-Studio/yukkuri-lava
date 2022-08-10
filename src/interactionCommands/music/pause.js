@@ -7,7 +7,8 @@ class Pause extends Command {
       component: new SlashCommandBuilder()
       .setName("pause")
       .setDescription("Pause or Resume the current music."),
-      inVoice: true
+      inVoice: true,
+      category: "Music"
     })
   }
   

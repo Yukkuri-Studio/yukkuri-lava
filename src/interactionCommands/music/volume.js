@@ -15,6 +15,7 @@ class Volume extends Command {
             .setRequired(true)
         ),
       inVoice: true,
+      category: "Music"
     });
   }
 

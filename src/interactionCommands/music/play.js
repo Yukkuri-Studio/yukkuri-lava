@@ -15,6 +15,7 @@ class Play extends Command {
             .setRequired(true)
         ),
       inVoice: true,
+      category: "Music"
     });
   }
 

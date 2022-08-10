@@ -7,6 +7,8 @@ class Stop extends Command {
       component: new SlashCommandBuilder()
         .setName("stop")
         .setDescription("Stop the music and clearing the queue"),
+        inVoice:true,
+        category: "Music"
     });
   }
 

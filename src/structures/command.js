@@ -3,6 +3,7 @@ class SlashCommand {
     this.client = client
     this.component = opt.component;
     this.inVoice = opt.inVoice || false
+    this.category = opt.category
   }
   
   async load(i) {

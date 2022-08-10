@@ -10,6 +10,7 @@ class Leave extends Command {
       component: new SlashCommandBuilder()
         .setName("leave")
         .setDescription("Stop and clearing music and leave"),
+        category: "Music"
     });
   }
 

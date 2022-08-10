@@ -18,7 +18,8 @@ class Info extends Command {
       .addChoices(
           { name: "lavalink", value: "lavalink" },
           { name: "bot", value: "bot" }
-      ))
+      )),
+      category: "Util"
     })
   }
   
