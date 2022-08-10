@@ -1,5 +1,5 @@
 const Command = require("../../structures/command");
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, version } = require("discord.js");
 
 
 class Help extends Command {
@@ -15,6 +15,26 @@ class Help extends Command {
   async run(i) {
     let category = new Set([
       ...Object.values(this.client.interactionCommand).map((x) => x.category)]);
+      
+     const inviteButton = new ButtonBuilder()
+    .setStyle(ButtonStyle.Link)
+    .setLabel("Invite Me!")
+    .setEmoji("936926209147809802")
+    .setURL(`https://discord.com/api/oauth2/authorize?client_id=${this.client.user.id}&permissions=8&scope=bot%20applications.commands`)
+    
+    const githubSponsor = new ButtonBuilder()
+    .setStyle(ButtonStyle.Link)
+    .setLabel("GitHub Sponsors!")
+    .setEmoji("918318537532137532")
+    .setURL(`https://github.com/sponsors/ameliakiara`)
+    
+    const patreonButton = new ButtonBuilder()
+    .setStyle(ButtonStyle.Link)
+    .setLabel("Patreon!")
+    .setEmoji("918318805074210836")
+    .setURL(`https://patreon.com/ameliakiara`)
+    
+    const row = new ActionRowBuilder().addComponents([ inviteButton, githubSponsor, patreonButton ]);
 
     const embed = new EmbedBuilder()
       .setColor("Red")
@@ -32,7 +52,7 @@ class Help extends Command {
         ])
       }
 
-    i.reply({ embeds: [embed] });
+    i.reply({ embeds: [embed], components: [row]});
   }
 }
 
