@@ -50,7 +50,7 @@ class Info extends Command {
     
     const cpu = await si.cpu();
     const mem = await si.mem()
-    console.log(mem)
+
     let users = 0
     this.client.guilds.cache.forEach((g) => users += g.memberCount)
         const info = new EmbedBuilder()
