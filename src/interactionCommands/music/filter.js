@@ -87,6 +87,7 @@ class Filter extends Command {
             )
         ),
       inVoice: true,
+      category: "Music"
     });
   }
 

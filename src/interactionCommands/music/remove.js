@@ -14,6 +14,7 @@ class Remove extends Command {
             .setRequired(true)
         ),
       inVoice: true,
+      category: "Music"
     });
   }
 

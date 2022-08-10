@@ -18,7 +18,9 @@ class Bgm extends Command {
         { name: "POPPUNK", value: "POPPUNK" },
         { name: "TOPCHARTS", value: "TOPCHARTS" },
       )
-      .setRequired(true))
+      .setRequired(true)),
+      inVoice: true,
+      category: "Music"
     })
   }
   

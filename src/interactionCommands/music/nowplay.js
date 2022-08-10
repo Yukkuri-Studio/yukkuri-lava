@@ -9,6 +9,7 @@ class NowPlay extends Command {
       component: new SlashCommandBuilder()
         .setName("nowplay")
         .setDescription("Showing current playing music"),
+        category: "Music"
     });
   }
 

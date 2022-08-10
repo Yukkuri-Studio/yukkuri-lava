@@ -6,7 +6,8 @@ class Invite extends Command {
         super(client, {
             component: new SlashCommandBuilder()
             .setName("invite")
-            .setDescription("Invite me to your server")
+            .setDescription("Invite me to your server"),
+            category: "Util"
         })
     }
     

@@ -13,7 +13,8 @@ class Lyrics extends Command {
         .setDescription("Find music lyrics")
         .addStringOption((opt) => opt
           .setName("song")
-          .setDescription("Insert the song name"))
+          .setDescription("Insert the song name")),
+        category: "Music"
     })
   }
 

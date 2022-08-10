@@ -12,7 +12,8 @@ class Search extends Command {
             .setName("song")
             .setDescription("Insert a song title")
             .setRequired(true)),
-            inVoice: true
+            inVoice: true,
+            category: "Music"
         })
     }
     

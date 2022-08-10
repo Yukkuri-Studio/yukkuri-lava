@@ -7,7 +7,8 @@ class AutoPlay extends Command {
       component: new SlashCommandBuilder()
       .setName("autoplay")
       .setDescription("Autoplaying music"),
-      inVoice: true
+      inVoice: true,
+      category: "Music"
     })
   }
   

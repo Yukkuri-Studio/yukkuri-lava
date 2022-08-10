@@ -6,7 +6,8 @@ class Ping extends Command {
     super(client, {
       component: new SlashCommandBuilder()
       .setName("ping")
-      .setDescription("Check bot ping")
+      .setDescription("Check bot ping"),
+      category: "Util"
     })
   }
   

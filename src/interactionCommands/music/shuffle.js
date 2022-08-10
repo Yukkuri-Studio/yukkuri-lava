@@ -8,6 +8,7 @@ class Shuffle extends Command {
         .setName("shuffle")
         .setDescription("Shuffle music on queue"),
       inVoice: true,
+      category: "Music"
     });
   }
 

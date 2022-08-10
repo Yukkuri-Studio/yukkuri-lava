@@ -7,6 +7,7 @@ class Skip extends Command {
       component: new SlashCommandBuilder()
         .setName("skip")
         .setDescription("Skip the current song"),
+        category: "Music"
     });
   }
 
