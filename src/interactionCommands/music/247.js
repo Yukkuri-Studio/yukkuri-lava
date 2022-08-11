@@ -12,6 +12,8 @@ class Forever extends Command {
     });
   }
   async run(i) {
+    const memberVoice = i.member.voice.channelId;
+
     if (this.inVoice && !memberVoice) {
       await i.editReply(
         "You must be in voice channel before running this command."
