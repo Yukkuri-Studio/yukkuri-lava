@@ -40,7 +40,7 @@ class Forever extends Command {
       db.save();
     }
     
-    const time = db.premiumStamp + db.premiumExp - Date.ow()
+    const time = db.premiumStamp + db.premiumExp - Date.now()
     
     if (time < 1) {
       i.reply({ content: "Your premium has been ended, vote me again a top.gg to gain the premium access", ephemeral: tue});
