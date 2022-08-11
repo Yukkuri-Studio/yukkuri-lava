@@ -37,7 +37,15 @@ class Forever extends Command {
       });
       db.save();
     }
-
+    
+    const time = db.premiumStamp + db.premiumExp - Date.ow()
+    
+    if (time < 1) {
+      i.reply({ content: "Your premium has been ended, vote me again a top.gg to gain the premium access", ephemeral: tue});
+      
+      db.premiumStatus = false;
+      return this.client.db.updateOne("premium", { userId: db.userId }, { $set: { premiumStatus: db.premiumStatus } });
+    }
     if (!db.premiumStatus) {
       i.reply({
         content:
