@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
-    "discord.js": "^14.0.3",
+    "discord.js": "^14.2.0",
     "glob": "^8.0.3",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
@@ -15,7 +15,6 @@
     "node-fetch": "^2.6.7",
     "poru": "github:ameliakiara/poru-dev",
     "string-progressbar": "^1.0.4",
-    "systeminformation": "^5.12.4",
     "youtubei": "^1.0.0-rc.4"
   },
   "devDependencies": {
