@@ -1,9 +1,6 @@
 const Command = require("../../structures/command");
-const {
-  SlashCommandBuilder,
-  EmbedBuilder
-} = require("discord.js");
-const fetch = require("node-fetch")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const fetch = require("node-fetch");
 
 class Lyrics extends Command {
   constructor(client) {
@@ -11,58 +8,62 @@ class Lyrics extends Command {
       component: new SlashCommandBuilder()
         .setName("lyrics")
         .setDescription("Find music lyrics")
-        .addStringOption((opt) => opt
-          .setName("song")
-          .setDescription("Insert the song name")),
-        category: "Music"
-    })
+        .addStringOption((opt) =>
+          opt.setName("song").setDescription("Insert the song name")
+        ),
+      category: "Music",
+    });
   }
 
   async run(i) {
-    const song = i.options.getString("song")
+    const song = i.options.getString("song");
 
     if (!song) {
-      const player = this.client.music.poru.players.get(i.guild.id)
+      const player = this.client.music.poru.players.get(i.guild.id);
 
-      if (!player) return await i.reply("No song playing right now")
+      if (!player) return await i.reply("No song playing right now");
 
-      if (!player.currentTrack) return await i.reply("No song playing right now")
+      if (!player.currentTrack)
+        return await i.reply("No song playing right now");
 
-      return this.lyricsSender(encodeURI(player.currentTrack.info.title), i)
+      return this.lyricsSender(encodeURI(player.currentTrack.info.title), i);
     }
 
-    return this.lyricsSender(song, i)
+    return this.lyricsSender(song, i);
   }
 
   async lyricsSender(song, i) {
     try {
-      const response = await fetch(`https://api.lxndr.dev/lyrics?song=${song}&from=DiscordRawon`, {
-        method: "get"
-      })
+      const response = await fetch(
+        `https://api.lxndr.dev/lyrics?song=${song}&from=DiscordRawon`,
+        {
+          method: "get",
+        }
+      );
 
-      const res = await response.json()
+      const res = await response.json();
 
-      const lyrics = this.chunk(res.lyrics, 2048)
+      const lyrics = this.chunk(res.lyrics, 2048);
 
       const embed = new EmbedBuilder()
         .setColor("Red")
         .setTitle(`${res.song} - ${res.artist}`)
         .setURL(res.url)
-        .setThumbnail(res.album_art)
+        .setThumbnail(res.album_art);
 
       if (res.lyrics.length > 2048) {
-        await i.reply({ content: "_ _" })
+        await i.reply({ content: "_ _" });
         lyrics.forEach(async (x) => {
-          embed.setDescription(x)
-          i.channel.send({ embeds: [embed] })
+          embed.setDescription(x);
+          i.channel.send({ embeds: [embed] });
         });
-        return
+        return;
       }
 
-      embed.setDescription(res.lyrics)
-      await i.reply({ embeds: [embed] })
+      embed.setDescription(res.lyrics);
+      await i.reply({ embeds: [embed] });
     } catch (er) {
-      await i.reply("No lyrics found.")
+      await i.reply("No lyrics found.");
     }
   }
 
@@ -75,4 +76,4 @@ class Lyrics extends Command {
   }
 }
 
-module.exports = Lyrics
+module.exports = Lyrics;

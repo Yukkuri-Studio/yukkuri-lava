@@ -1,29 +1,31 @@
 const Command = require("../../structures/command");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const playlist = require("../../settings/playlist.json")
+const playlist = require("../../settings/playlist.json");
 
 class Bgm extends Command {
   constructor(client) {
     super(client, {
       component: new SlashCommandBuilder()
-      .setName("bgm")
-      .setDescription("Play a bgm playlist")
-      .addStringOption((opt) => opt
-      .setName("name")
-      .setDescription("Select the bgm above")
-      .addChoices(
-        { name: "NSC", value: "NSC" },
-        { name: "LOFI", value: "LOFI" },
-        { name: "ANIME", value: "ANIME" },
-        { name: "POPPUNK", value: "POPPUNK" },
-        { name: "TOPCHARTS", value: "TOPCHARTS" },
-      )
-      .setRequired(true)),
+        .setName("bgm")
+        .setDescription("Play a bgm playlist")
+        .addStringOption((opt) =>
+          opt
+            .setName("name")
+            .setDescription("Select the bgm above")
+            .addChoices(
+              { name: "NSC", value: "NSC" },
+              { name: "LOFI", value: "LOFI" },
+              { name: "ANIME", value: "ANIME" },
+              { name: "POPPUNK", value: "POPPUNK" },
+              { name: "TOPCHARTS", value: "TOPCHARTS" }
+            )
+            .setRequired(true)
+        ),
       inVoice: true,
-      category: "Music"
-    })
+      category: "Music",
+    });
   }
-  
+
   async run(i) {
     await i.deferReply();
     const memberVoice = i.member.voice.channelId;
@@ -40,39 +42,41 @@ class Bgm extends Command {
       voiceChannel: memberVoice,
       textChannel: i.channel.id,
       deaf: true,
-      volume: 50
+      volume: 50,
     });
-    
-    const opt = i.options.getString("name")
-    const song = playlist.find(x => x.name === opt)
 
-    if(!song) return i.editReply("I can't find that playlist")
+    const opt = i.options.getString("name");
+    const song = playlist.find((x) => x.name === opt);
+
+    if (!song) return i.editReply("I can't find that playlist");
     const resolve = await this.client.music.poru.resolve(song.link);
     const { loadType, tracks, playlistInfo } = resolve;
 
     try {
-      if (loadType === 'PLAYLIST_LOADED') {
-				for (const track of resolve.tracks) {
-					track.info.requester = i.member;
-					player.queue.add(track);
-				}
+      if (loadType === "PLAYLIST_LOADED") {
+        for (const track of resolve.tracks) {
+          track.info.requester = i.member;
+          player.queue.add(track);
+        }
 
-				const embed = new EmbedBuilder()
-					.setColor('Red')
-					.setDescription(`Added \`${tracks.length}\` tracks from ${playlistInfo.name}`);
+        const embed = new EmbedBuilder()
+          .setColor("Red")
+          .setDescription(
+            `Added \`${tracks.length}\` tracks from ${playlistInfo.name}`
+          );
 
-				await i.editReply({
-					embeds: [embed],
-				});
+        await i.editReply({
+          embeds: [embed],
+        });
 
-				if (!player.isPlaying && !player.isPaused) return player.play();
+        if (!player.isPlaying && !player.isPaused) return player.play();
 
-				return;
-			}
+        return;
+      }
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   }
 }
 
-module.exports = Bgm
+module.exports = Bgm;

@@ -1,4 +1,4 @@
-const Client = require("./structures/client")
+const Client = require("./structures/client");
 
-const client = new Client()
-client.init()
+const client = new Client();
+client.init();
