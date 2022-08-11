@@ -3,13 +3,14 @@ const helmet = require("helmet");
 const { Webhook } = require("@top-gg/sdk");
 const { AutoPoster } = require("topgg-autoposter");
 const { connect } = require("mongoose");
+const ms = require("ms")
 
 class Util {
   constructor(client) {
     this.client = client;
   }
 
-  WebHookPoster(active = false) {
+  async WebHookPoster(active = false) {
     if (!active) return;
     const app = express();
     const webhook = new Webhook(process.env.TOPGG_AUTH_WEBHOOK);
@@ -26,7 +27,21 @@ class Util {
     app.use(helmet()).post(
       "/topwebhook",
       webhook.listener(async (vote) => {
-        console.log(vote);
+        let db = await this.client.db.getAndNull("premium", { userId: vote.user })
+        
+        if(!db) {
+          db = new this.client.db.models.premium({
+            userId: vote.user
+          })
+          db.save()
+        }
+        
+        db.premiumStatus = true
+        db.premiumStamp = ms("12h")
+        db.premiumExp = Date.now()
+        db.voteCount += 1
+        
+        this.client.db.updateOne("premium", { userId: vote.user }, { $set: { premumStatus: db.premiumStatus, premiumStamp: db.premiumStamp, premiumExp: db.premiumExp, voteCount: db.voteCount }})
       })
     );
     app.listen(this.client.config.PORT);
