@@ -12,7 +12,7 @@ class Util {
   WebHookPoster(active = false) {
     if (!active) return;
     const app = express();
-    const webhook = new Webhook(process.env.TOPGG_AUTH);
+    const webhook = new Webhook(process.env.TOPGG_AUTH_WEBHOOK);
     const post = AutoPoster(process.env.TOPGG_AUTH, this.client);
 
     post
