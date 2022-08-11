@@ -7,8 +7,8 @@ class Stop extends Command {
       component: new SlashCommandBuilder()
         .setName("stop")
         .setDescription("Stop the music and clearing the queue"),
-        inVoice:true,
-        category: "Music"
+      inVoice: true,
+      category: "Music",
     });
   }
 
@@ -29,7 +29,6 @@ class Stop extends Command {
 
     player.queue.clear();
     player.stop();
-
 
     const embed = new EmbedBuilder()
       .setColor("Red")

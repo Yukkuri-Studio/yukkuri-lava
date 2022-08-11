@@ -1,16 +1,16 @@
-const Poru = require('../../structures/poru')
+const Poru = require("../../structures/poru");
 
 class Error extends Poru {
   constructor(client) {
     super(client, {
       name: "Poru Error",
-      emiter: "nodeError"
-    })
+      emiter: "nodeError",
+    });
   }
-  
+
   async run() {
-    console.log("Error while connecting to lavalink server.")
+    console.log("Error while connecting to lavalink server.");
   }
 }
 
-module.exports = Error
+module.exports = Error;

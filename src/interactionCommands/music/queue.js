@@ -8,7 +8,7 @@ class Queue extends Command {
       component: new SlashCommandBuilder()
         .setName("queue")
         .setDescription("Show music list"),
-        category: "Music"
+      category: "Music",
     });
   }
 

@@ -1,21 +1,24 @@
-const Event = require("../../structures/event")
+const Event = require("../../structures/event");
 
 class Voice extends Event {
   constructor(client) {
     super(client, {
       name: "Vce State",
-      emiter: "voiceStateUpdate"
-    })
+      emiter: "voiceStateUpdate",
+    });
   }
-  
+
   async run(oldVc, newVc) {
-    const player = this.client.music.poru.get(oldVc.guild.id)
-    if (!player) return
-    
-    if (!newVc.guild.members.me.voice.channel) {
-    player.destroy();
-   }
+    const player = this.client.music.poru.get(oldVc.guild.id);
+    if (!player) return;
+
+    const voice = this.client.channels.cache.get(player.voiceChannel);
+    const voiceSize = voice.members.filter((x) => !x.bot).size;
+
+    if (voiceSize < 1) {
+      return player.destroy();
+    }
   }
 }
 
-module.exports = Voice
+module.exports = Voice;

@@ -1,7 +1,6 @@
 const Command = require("../../structures/command");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
-
 class Volume extends Command {
   constructor(client) {
     super(client, {
@@ -15,7 +14,7 @@ class Volume extends Command {
             .setRequired(true)
         ),
       inVoice: true,
-      category: "Music"
+      category: "Music",
     });
   }
 
@@ -39,7 +38,7 @@ class Volume extends Command {
 
     let vol = i.options.getNumber("value");
 
-    if (vol > 100) vol = 100
+    if (vol > 100) vol = 100;
     else if (vol < 0) vol = 0;
 
     player.setVolume(vol);
@@ -53,4 +52,3 @@ class Volume extends Command {
 }
 
 module.exports = Volume;
-

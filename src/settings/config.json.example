@@ -3,5 +3,7 @@
   "LAVA_PASS": "lavalink password"
   "LAVA_PORT": 2008,
   "NODE": "production or development",
-  "GUILD_DEV": ["guild dev id"]
+  "GUILD_DEV": ["guild dev id"],
+  "POSTER_ACTIVE": false,
+  "PORT": 2003
 }

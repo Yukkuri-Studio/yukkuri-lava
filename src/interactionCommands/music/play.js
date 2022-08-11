@@ -1,7 +1,6 @@
 const Command = require("../../structures/command");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
-
 class Play extends Command {
   constructor(client) {
     super(client, {
@@ -15,7 +14,7 @@ class Play extends Command {
             .setRequired(true)
         ),
       inVoice: true,
-      category: "Music"
+      category: "Music",
     });
   }
 
@@ -35,54 +34,56 @@ class Play extends Command {
       voiceChannel: memberVoice,
       textChannel: i.channel.id,
       deaf: true,
-      volume: 50
+      volume: 50,
     });
 
     const resolve = await this.client.music.poru.resolve(
       i.options.getString("track")
     );
-    
+
     const { loadType, tracks, playlistInfo } = resolve;
 
     try {
-            if (loadType === 'PLAYLIST_LOADED') {
-				for (const track of resolve.tracks) {
-					track.info.requester = i.member;
-					player.queue.add(track);
-				}
+      if (loadType === "PLAYLIST_LOADED") {
+        for (const track of resolve.tracks) {
+          track.info.requester = i.member;
+          player.queue.add(track);
+        }
 
-				const embed = new EmbedBuilder()
-					.setColor('Red')
-					.setDescription(`Added \`${tracks.length}\` tracks from ${playlistInfo.name}`);
+        const embed = new EmbedBuilder()
+          .setColor("Red")
+          .setDescription(
+            `Added \`${tracks.length}\` tracks from ${playlistInfo.name}`
+          );
 
-				await i.editReply({
-					embeds: [embed],
-				});
+        await i.editReply({
+          embeds: [embed],
+        });
 
-				if (!player.isPlaying && !player.isPaused) return player.play();
+        if (!player.isPlaying && !player.isPaused) return player.play();
 
-				return;
-			}
+        return;
+      }
 
-			if (loadType === 'SEARCH_RESULT' || loadType === 'TRACK_LOADED') {
-				const track = tracks.shift();
-				track.info.requester = i.member;
+      if (loadType === "SEARCH_RESULT" || loadType === "TRACK_LOADED") {
+        const track = tracks.shift();
+        track.info.requester = i.member;
 
-				player.queue.add(track);
+        player.queue.add(track);
 
-				const embed = new EmbedBuilder()
-					.setColor('Red')
-					.setDescription(`Added [${track.info.title}](${track.info.uri})`);
+        const embed = new EmbedBuilder()
+          .setColor("Red")
+          .setDescription(`Added [${track.info.title}](${track.info.uri})`);
 
-				await i.editReply({
-					embeds: [embed],
-				});
-				if (!player.isPlaying && !player.isPaused) return player.play();
+        await i.editReply({
+          embeds: [embed],
+        });
+        if (!player.isPlaying && !player.isPaused) return player.play();
 
-				return;
-			}
+        return;
+      }
     } catch (er) {
-        console.log(er);
+      console.log(er);
       i.editReply({ content: "No result found." });
     }
   }

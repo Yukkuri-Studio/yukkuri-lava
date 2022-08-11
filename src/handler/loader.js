@@ -55,29 +55,34 @@ class Loader {
 
     console.log(`${i} Interaction commands loaded.`);
     this.client.once("ready", async () => {
-        
-        if (this.client.config.NODE === "delete-production") {
+      if (this.client.config.NODE === "delete-production") {
         await this.client.application.commands.set([]);
         console.log("Deleting slash command production has been registered.");
         return;
-        }
-        
-        if (this.client.config.NODE === "delete-development") {
-        await this.client.application.commands.set([], this.client.config.GUILD_DEV);
+      }
+
+      if (this.client.config.NODE === "delete-development") {
+        await this.client.application.commands.set(
+          [],
+          this.client.config.GUILD_DEV
+        );
         console.log("Deleting slash command development has been registered.");
         return;
-        }
+      }
 
-        if (this.client.config.NODE === "production") {
-            await this.client.application.commands.set(data);
+      if (this.client.config.NODE === "production") {
+        await this.client.application.commands.set(data);
         console.log("Slash command production has been registered.");
         return;
-        }
-        
-        if (this.client.config.NODE === "development") {
-            await this.client.application.commands.set(data, this.client.config.GUILD_DEV);
+      }
+
+      if (this.client.config.NODE === "development") {
+        await this.client.application.commands.set(
+          data,
+          this.client.config.GUILD_DEV
+        );
         console.log("Slash command development has been registered.");
-        }
+      }
     });
   }
 

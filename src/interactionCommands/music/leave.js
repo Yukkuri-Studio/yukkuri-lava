@@ -1,8 +1,5 @@
 const Command = require("../../structures/command");
-const {
-  SlashCommandBuilder,
-  EmbedBuilder,
-} = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 class Leave extends Command {
   constructor(client) {
@@ -10,10 +7,9 @@ class Leave extends Command {
       component: new SlashCommandBuilder()
         .setName("leave")
         .setDescription("Stop and clearing music and leave"),
-        category: "Music"
+      category: "Music",
     });
   }
-
 
   async run(i) {
     await i.deferReply();
