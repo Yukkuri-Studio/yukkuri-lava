@@ -20,9 +20,9 @@ class BullMQ {
 		queue.obliterate();
 
 		const db = await this.client.db.getAll('premium');
-		if (!db.length) return
 
 		for (const pr of db) {
+		  if(!pr) continue
 			const ended = (pr.premiumStamp + db.premiumExp) - Date.now();
 
 			if (ended < 0) {
