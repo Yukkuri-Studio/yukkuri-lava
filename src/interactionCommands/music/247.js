@@ -34,7 +34,9 @@ class Forever extends Command {
       db.save();
     }
     
-    if (!db.premiumStatus) {
+    const ended = pr.premiumStamp + db.premiumExp - Date.now();
+    
+    if (ended < 0) {
       i.reply({
         content:
           "You're not premium, go vote me now at top.gg and get your premium every 12 hours",

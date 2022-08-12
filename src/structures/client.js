@@ -16,13 +16,6 @@ class YukkuriClient extends Client {
     this.music = new Music(this, Poru);
     this.util = new Util(this);
     this.db = new Database(this);
-    this.timer = new BullMQ(this)
-    this.redis = new Redis({
-      host: config.REDIS,
-      port: config.RPORT,
-      password: config.RPASSWORD,
-      maxRetriesPerRequest: null
-    })
     this.config = config;
   }
 
