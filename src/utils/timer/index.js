@@ -19,8 +19,10 @@ class BullMQ {
 		const queue = new Queue('PremiumTimer', { connection: this.client.redis });
 		queue.obliterate();
 
-		const db = await this.client.db.getAll('premium');
-
+		const db = await this.client.db.models.premium.find()
+		
+		if(!db.length) return
+		
 		for (const pr of db) {
 		  if(!pr) continue
 			const ended = (pr.premiumStamp + db.premiumExp) - Date.now();
