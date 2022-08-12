@@ -41,7 +41,7 @@ class Util {
         db.premiumExp = Date.now()
         db.voteCount += 1
         
-        this.client.db.updateOne("premium", { userId: vote.user }, { $set: { premumStatus: db.premiumStatus, premiumStamp: db.premiumStamp, premiumExp: db.premiumExp, voteCount: db.voteCount }})
+        this.client.db.updateOne("premium", { userId: vote.user }, { $set: { premiumStatus: db.premiumStatus, premiumStamp: db.premiumStamp, premiumExp: db.premiumExp, voteCount: db.voteCount }})
         this.client.timer.add(vote.user, db);
       })
     );
