@@ -21,13 +21,7 @@ class Forever extends Command {
       return;
     }
 
-    const player = this.client.music.poru.createConnection({
-      guildId: i.guild.id,
-      voiceChannel: memberVoice,
-      textChannel: i.channel.id,
-      deaf: true,
-      volume: 50,
-    });
+    const player = this.client.music.poru.players.get(i.guild.id)
 
     let db = await this.client.db.getAndNull("premium", {
       userId: i.member.user.id,
@@ -40,14 +34,6 @@ class Forever extends Command {
       db.save();
     }
     
-    const time = db.premiumStamp + db.premiumExp - Date.now()
-    
-    if (time < 1) {
-      i.reply({ content: "Your premium has been ended, vote me again a top.gg to gain the premium access", ephemeral: true});
-      
-      db.premiumStatus = false;
-      return this.client.db.updateOne("premium", { userId: db.userId }, { $set: { premiumStatus: db.premiumStatus } });
-    }
     if (!db.premiumStatus) {
       i.reply({
         content:
