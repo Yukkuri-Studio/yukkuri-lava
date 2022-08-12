@@ -35,17 +35,17 @@ class BullMQ {
 		}
 	}
 	
-	async add(job, db) {
+	async add(job, pr) {
 		await this.scheduler();
 		const queue = new Queue('PremiumTimer', { connection: this.client.redis });
 
-		queue.add(job, { db }, { delay: db.premiumStamp, jobId: ga.jobId });
+		queue.add(job, { pr }, { delay: pr.premiumStamp });
 	}
 	
 	worker() {
 		const process = async (job) => {
-			const db = job.data.db;
-			this.premiumUpdate(db);
+			const pr = job.data.pr;
+			this.premiumUpdate(pr);
 		};
 
 		// eslint-disable-next-line no-new
