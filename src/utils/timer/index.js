@@ -30,8 +30,8 @@ class BullMQ {
 			if (ended < 0) {
 				await queue.add(pr.userId, { pr }, {  delay: ended });
 				continue;
-			} else { 
-			await queue.add(pr.userId, { pr }, { delay: ended }); }
+			}
+			await queue.add(pr.userId, { pr }, { delay: ended });
 		}
 	}
 	
