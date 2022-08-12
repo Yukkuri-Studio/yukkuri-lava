@@ -34,7 +34,8 @@ class NowPlay extends Command {
           `**Duration**: ${ms(dur)}`,
           `**Artist**: ${track.author}`,
           `**Stream**: ${track.isStream ? "Yes" : "No"}`,
-          `**Volume**: ${player.volume}``${pro}  ${ms(durationleft, {
+          `**Volume**: ${player.volume}%`,
+          `${pro}  ${ms(durationleft, {
             long: true,
           })} left`,
         ].join("\n")
