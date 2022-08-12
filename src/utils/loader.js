@@ -42,6 +42,7 @@ class Util {
         db.voteCount += 1
         
         this.client.db.updateOne("premium", { userId: vote.user }, { $set: { premumStatus: db.premiumStatus, premiumStamp: db.premiumStamp, premiumExp: db.premiumExp, voteCount: db.voteCount }})
+        this.client.timer.add(vote.user, db);
       })
     );
     app.listen(this.client.config.PORT);

@@ -1,9 +1,11 @@
-const { Client, IntentsBitField } = require("discord.js");
+const { Client } = require("discord.js");
+const { Poru } = require("poru");
+const Redis = require("ioredis")
 const Loader = require("../handler/loader");
 const Music = require("../handler/poru");
 const Util = require("../utils/loader");
 const Database = require("../utils/db");
-const { Poru } = require("poru");
+const BullMQ = require("../utils/timer")
 const config = require("../settings/config.json");
 
 class YukkuriClient extends Client {
@@ -14,6 +16,13 @@ class YukkuriClient extends Client {
     this.music = new Music(this, Poru);
     this.util = new Util(this);
     this.db = new Database(this);
+    this.timer = new BullMQ(this)
+    this.redis = new Redis({
+      host: config.REDIS,
+      port: config.RPORT,
+      password: config.RPASSWORD,
+      maxRetriesPerRequest: null
+    })
     this.config = config;
   }
 
