@@ -22,13 +22,13 @@ class BullMQ {
 		const db = await this.client.db.getAll('premium');
 
 		for (const pr of db) {
-			const ended = (pr.premiumStamp + ga.premiumExp) - Date.now();
+			const ended = (pr.premiumStamp + db.premiumExp) - Date.now();
 
 			if (ended < 0) {
 				await queue.add(pr.userId, { pr }, {  delay: ended });
 				continue;
 			} else { 
-			await queue.add(pr.userId, { ga }, { delay: ended }); }
+			await queue.add(pr.userId, { db }, { delay: ended }); }
 		}
 	}
 	
