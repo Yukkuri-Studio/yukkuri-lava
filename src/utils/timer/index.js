@@ -25,13 +25,13 @@ class BullMQ {
 		
 		for (const pr of db) {
 		  if(!pr) continue
-			const ended = (pr.premiumStamp + db.premiumExp) - Date.now();
+			const ended = pr.premiumStamp + db.premiumExp - Date.now();
 
 			if (ended < 0) {
 				await queue.add(pr.userId, { pr }, {  delay: ended });
 				continue;
 			} else { 
-			await queue.add(pr.userId, { db }, { delay: ended }); }
+			await queue.add(pr.userId, { pr }, { delay: ended }); }
 		}
 	}
 	
