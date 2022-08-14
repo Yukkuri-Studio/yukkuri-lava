@@ -34,7 +34,7 @@ class Forever extends Command {
       db.save();
     }
     
-    const ended = pr.premiumStamp + db.premiumExp - Date.now();
+    const ended = db.premiumStamp + db.premiumExp - Date.now();
     
     if (ended < 0) {
       i.reply({
