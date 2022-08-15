@@ -1,24 +1,16 @@
-const Command = require("../../structures/command");
+const Command = require("../../../structures/command");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const playlist = require("../../settings/playlist.json");
 
-class Bgm extends Command {
+class Play extends Command {
   constructor(client) {
     super(client, {
       component: new SlashCommandBuilder()
-        .setName("bgm")
-        .setDescription("Play a bgm playlist")
+        .setName("play")
+        .setDescription("Play music from everywhare")
         .addStringOption((opt) =>
           opt
-            .setName("name")
-            .setDescription("Select the bgm above")
-            .addChoices(
-              { name: "NSC", value: "NSC" },
-              { name: "LOFI", value: "LOFI" },
-              { name: "ANIME", value: "ANIME" },
-              { name: "POPPUNK", value: "POPPUNK" },
-              { name: "TOPCHARTS", value: "TOPCHARTS" }
-            )
+            .setName("track")
+            .setDescription("Insert <title | link | playlist> to play music")
             .setRequired(true)
         ),
       inVoice: true,
@@ -45,11 +37,10 @@ class Bgm extends Command {
       volume: 50,
     });
 
-    const opt = i.options.getString("name");
-    const song = playlist.find((x) => x.name === opt);
+    const resolve = await this.client.music.poru.resolve(
+      i.options.getString("track")
+    );
 
-    if (!song) return i.editReply("I can't find that playlist");
-    const resolve = await this.client.music.poru.resolve(song.link);
     const { loadType, tracks, playlistInfo } = resolve;
 
     try {
@@ -73,10 +64,29 @@ class Bgm extends Command {
 
         return;
       }
-    } catch (e) {
-      console.log(e);
+
+      if (loadType === "SEARCH_RESULT" || loadType === "TRACK_LOADED") {
+        const track = tracks.shift();
+        track.info.requester = i.member;
+
+        player.queue.add(track);
+
+        const embed = new EmbedBuilder()
+          .setColor("Red")
+          .setDescription(`Added [${track.info.title}](${track.info.uri})`);
+
+        await i.editReply({
+          embeds: [embed],
+        });
+        if (!player.isPlaying && !player.isPaused) return player.play();
+
+        return;
+      }
+    } catch (er) {
+      console.log(er);
+      i.editReply({ content: "No result found." });
     }
   }
 }
 
-module.exports = Bgm;
+module.exports = Play;

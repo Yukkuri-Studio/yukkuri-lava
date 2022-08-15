@@ -1,18 +1,12 @@
-const Command = require("../../structures/command");
+const Command = require("../../../structures/command");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
-class Remove extends Command {
+class Pause extends Command {
   constructor(client) {
     super(client, {
       component: new SlashCommandBuilder()
-        .setName("remove")
-        .setDescription("Removing music from the queue")
-        .addNumberOption((opt) =>
-          opt
-            .setName("song")
-            .setDescription("Remove music from the queue list")
-            .setRequired(true)
-        ),
+        .setName("pause")
+        .setDescription("Pause or Resume the current music."),
       inVoice: true,
       category: "Music",
     });
@@ -32,15 +26,19 @@ class Remove extends Command {
 
     if (!player) return i.reply("There is no music playing right now");
 
-    const song = i.options.getNumber("song");
+    if (player.isPaused) {
+      i.reply("The music is already paused.");
+      return;
+    }
 
-    player.queue.remove(song - 1);
+    player.pause(!player.isPaused);
 
     const embed = new EmbedBuilder()
       .setColor("Red")
-      .setDescription("Successfully removing the song");
+      .setDescription(`Music has been \`Pause\``);
+
     i.reply({ embeds: [embed] });
   }
 }
 
-module.exports = Remove;
+module.exports = Pause;

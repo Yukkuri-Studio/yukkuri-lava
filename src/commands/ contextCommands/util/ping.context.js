@@ -1,16 +1,19 @@
-const Command = require("../../structures/command");
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const Command = require("../../../structures/command");
+const {
+  ContextMenuCommandBuilder,
+  ApplicationCommandType,
+  EmbedBuilder
+} = require("discord.js");
 
-class Ping extends Command {
+class PingContext extends Command {
   constructor(client) {
     super(client, {
-      component: new SlashCommandBuilder()
-        .setName("ping")
-        .setDescription("Check bot ping"),
-      category: "Util",
-    });
+      component: new ContextMenuCommandBuilder()
+      .setName("ping")
+      .setType(ApplicationCommandType.Message)
+    })
   }
-
+  
   async run(i) {
     const ws = Date.now() - i.createdTimestamp;
     const embed = new EmbedBuilder()
@@ -26,4 +29,4 @@ class Ping extends Command {
   }
 }
 
-module.exports = Ping;
+module.exports = PingContext

@@ -1,5 +1,12 @@
-const Command = require("../../structures/command");
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const Command = require("../../../structures/command");
+const {
+  SlashCommandBuilder,
+  EmbedBuilder,
+  ModalBuilder,
+  TextInputBuilder,
+  TextInputStyle,
+  ActionRowBuilder,
+} = require("discord.js");
 
 class Playlist extends Command {
   constructor(client) {
@@ -10,21 +17,7 @@ class Playlist extends Command {
         .addSubcommand((sub) =>
           sub
             .setName("add")
-            .setDescription("Add your playlist")
-            .addStringOption((opt) =>
-              opt
-                .setName("link")
-                .setDescription(
-                  "isert the playlist link here, make sure your link is public."
-                )
-                .setRequired(true)
-            )
-            .addStringOption((opt) =>
-              opt
-                .setName("name")
-                .setDescription("Give your playlist name")
-                .setRequired(true)
-            )
+            .setDescription("Add your custom playlist up to link.")
         )
         .addSubcommand((sub) =>
           sub
@@ -37,8 +30,19 @@ class Playlist extends Command {
             .setDescription("Load yout playlist and play it")
             .addStringOption((opt) =>
               opt
-                .setName("names")
+                .setName("name")
                 .setDescription("Choice your playlist and play it")
+                .setRequired(true)
+            )
+        )
+        .addSubcommand((sub) =>
+          sub
+            .setName("remove")
+            .setDescription("Remove playlist")
+            .addStringOption((opt) =>
+              opt
+                .setName("name")
+                .setDescription("Insert the playlist name")
                 .setRequired(true)
             )
         ),
@@ -61,9 +65,6 @@ class Playlist extends Command {
 
     switch (sub) {
       case "add": {
-        const opt = i.options.getString("link");
-        const name = i.options.getString("name");
-
         if (db.playlist.length > 2) {
           i.reply({
             content:
@@ -73,25 +74,25 @@ class Playlist extends Command {
           break;
         }
 
-        const embed = new EmbedBuilder()
-          .setColor("Red")
-          .setTitle("Added playlist")
-          .setDescription([
-            `**Playlist Name**: ${name}`,
-            `**Playlist Link**: ${opt}`,
-          ]);
+        const playlistName = new TextInputBuilder()
+          .setCustomId(`${i.member.user.id}-playlist-name`)
+          .setLabel("Insert The Playlist Name")
+          .setStyle(TextInputStyle.Short);
 
-        i.reply({
-          embeds: [embed],
-          ephemeral: true,
-        });
+        const playlistLink = new TextInputBuilder()
+          .setCustomId(`${i.member.user.id}-playlist-link`)
+          .setLabel("Insert your playlist link")
+          .setStyle(TextInputStyle.Paragraph);
 
-        db.playlist.push({ names: name, link: opt });
-        this.client.db.updateOne(
-          "playlist",
-          { userId: i.member.user.id },
-          { $set: { playlist: db.playlist } }
-        );
+        const pn = new ActionRowBuilder().addComponents(playlistName);
+        const pl = new ActionRowBuilder().addComponents(playlistLink);
+        const modal = new ModalBuilder()
+          .setTitle("Custom Playlist")
+          .setCustomId(`${i.member.user.id}-modal-playlist`)
+          .addComponents(pn, pl);
+
+        await i.showModal(modal);
+        this.modalSubmit(db);
         break;
       }
 
@@ -116,7 +117,7 @@ class Playlist extends Command {
       }
 
       case "load": {
-        const name = i.options.getString("names");
+        const name = i.options.getString("name");
         const choice = db.playlist.find((x) => x.names === name);
 
         if (!choice) {
@@ -127,7 +128,69 @@ class Playlist extends Command {
         this.loadPlay(i, choice.link);
         break;
       }
+
+      case "remove": {
+        const name = i.options.getString("name");
+        const playlistFind = db.playlist.find((x) => x.names === name);
+
+        if (!playlistFind) {
+          i.reply({
+            content: "I can't find the playlist name.",
+            ephemeral: true,
+          });
+          return;
+        }
+
+        const playlistIndex = db.playlist.findIndex(
+          (x) => x.names === playlistFind.names
+        );
+
+        const embed = new EmbedBuilder()
+          .setColor("Red")
+          .setDescription(`Successfully delete **${name}** playlist.`);
+
+        i.reply({ embeds: [embed], epmeheral: true });
+
+        db.playlist.splice(playlistIndex, 1);
+        this.client.db.updateOne(
+          "playlist",
+          { userId: db.userId },
+          { $set: { playlist: db.playlist } }
+        );
+        break;
+      }
     }
+  }
+
+  async modalSubmit(db) {
+    this.client.once("interactionCreate", async (i) => {
+      const name = i.fields.getTextInputValue(
+        `${i.member.user.id}-playlist-name`
+      );
+      const links = i.fields.getTextInputValue(
+        `${i.member.user.id}-playlist-link`
+      );
+
+      const embed = new EmbedBuilder()
+        .setColor("Red")
+        .setDescription(
+          [
+            `Successfully added your custom playlist`,
+            `\u200b Name: ${name}`,
+            `\u200b Link: ${links}`,
+          ].join("\n")
+        );
+
+      i.reply({ ephemeral: true, embeds: [embed] });
+
+      db.playlist.push({ names: name, link: links });
+
+      this.client.db.updateOne(
+        "playlist",
+        { userId: db.userId },
+        { $set: { playlist: db.playlist } }
+      );
+    });
   }
 
   async loadPlay(i, link) {

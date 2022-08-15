@@ -1,18 +1,19 @@
-const Command = require("../../structures/command");
+const Command = require("../../../structures/command");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
-class Shuffle extends Command {
+class Stop extends Command {
   constructor(client) {
     super(client, {
       component: new SlashCommandBuilder()
-        .setName("shuffle")
-        .setDescription("Shuffle music on queue"),
+        .setName("stop")
+        .setDescription("Stop the music and clearing the queue"),
       inVoice: true,
       category: "Music",
     });
   }
 
   async run(i) {
+    await i.deferReply();
     const memberVoice = i.member.voice.channelId;
 
     if (this.inVoice && !memberVoice) {
@@ -24,16 +25,17 @@ class Shuffle extends Command {
 
     const player = this.client.music.poru.players.get(i.guild.id);
 
-    if (!player) return i.reply("There is no music playing right now.");
+    if (!player) return i.editReply("There is no music play on this server.");
 
-    player.queue.shuffle();
+    player.queue.clear();
+    player.stop();
 
     const embed = new EmbedBuilder()
       .setColor("Red")
-      .setDescription("Succesfully shuffle thqueue");
+      .setDescription("Clearing queue and stoping music");
 
-    i.reply({ embeds: [embed] });
+    i.editReply({ embeds: [embed] });
   }
 }
 
-module.exports = Shuffle;
+module.exports = Stop;
