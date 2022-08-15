@@ -21,7 +21,7 @@ class Forever extends Command {
       return;
     }
 
-    const player = this.client.music.poru.players.get(i.guild.id)
+    const player = this.client.music.poru.players.get(i.guild.id);
 
     let db = await this.client.db.getAndNull("premium", {
       userId: i.member.user.id,
@@ -33,9 +33,9 @@ class Forever extends Command {
       });
       db.save();
     }
-    
+
     const ended = db.premiumStamp + db.premiumExp - Date.now();
-    
+
     if (ended < 0) {
       i.reply({
         content:
@@ -50,7 +50,8 @@ class Forever extends Command {
       return;
     }
 
-    player.is247(!player.is247);
+    if (!player.is247) player.is247 = true;
+    else player.is247 = false;
 
     const embed = new EmbedBuilder()
       .setColor("Red")
