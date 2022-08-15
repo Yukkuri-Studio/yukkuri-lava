@@ -35,7 +35,7 @@ class Loader {
 
   async loadCommand() {
     const interactionCommands = await this.getFiles(
-      `${this.path}/interactionCommands/**/*.js`
+      `${this.path}/commands/**/*.js`
     );
     let i = 0;
     const data = [];

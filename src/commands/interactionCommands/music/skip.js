@@ -1,4 +1,4 @@
-const Command = require("../../structures/command");
+const Command = require("../../../structures/command");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 class Skip extends Command {
