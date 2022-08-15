@@ -24,13 +24,18 @@ class Pause extends Command {
 
     const player = this.client.music.poru.players.get(i.guild.id);
 
-    if (!player) return i.reply("There is no music l playing right now");
+    if (!player) return i.reply("There is no music playing right now");
+
+    if (player.isPaused) {
+      i.reply("The music is already paused.");
+      return;
+    }
 
     player.pause(!player.isPaused);
 
     const embed = new EmbedBuilder()
       .setColor("Red")
-      .setDescription(`Music has been ${player.isPaused ? "Pause" : "Resume"}`);
+      .setDescription(`Music has been \`Pause\``);
 
     i.reply({ embeds: [embed] });
   }
