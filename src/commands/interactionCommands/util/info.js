@@ -36,6 +36,9 @@ class Info extends Command {
     const opt = i.options.getString("value");
 
     const nodes = this.client.music.poru.nodes.get("yukkuri");
+    
+    const nodes2 = this.client.music.poru.nodes.get("yukkuri-2");
+    console.log(nodes2)
     const player = this.client.music.poru.players;
 
     const inviteButton = new ButtonBuilder()
@@ -63,12 +66,19 @@ class Info extends Command {
       .setLabel("Vote Me!")
       .setEmoji("778416296630157333")
       .setURL(`https://top.gg/bot/477762276389027840/vote`);
+      
+      const support = new ButtonBuilder()
+      .setStyle(ButtonStyle.Link)
+      .setLabel("Supported By Premier Crafty!")
+      .setEmoji("787321652345438228")
+      .setURL(`https://discord.gg/D6N3Ax727Y`);
 
     const row = new ActionRowBuilder().addComponents([
       inviteButton,
       githubSponsor,
       patreonButton,
-      vote
+      vote,
+      support
     ]);
 
     const cpu = await si.cpu();
