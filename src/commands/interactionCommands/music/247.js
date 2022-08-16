@@ -23,28 +23,6 @@ class Forever extends Command {
 
     const player = this.client.music.poru.players.get(i.guild.id);
 
-    let db = await this.client.db.getAndNull("premium", {
-      userId: i.member.user.id,
-    });
-
-    if (!db) {
-      db = new this.client.db.models.premium({
-        userId: i.member.user.id,
-      });
-      db.save();
-    }
-
-    const ended = db.premiumStamp + db.premiumExp - Date.now();
-
-    if (ended < 0) {
-      i.reply({
-        content:
-          "You're not premium, go vote me now at top.gg and get your premium every 12 hours",
-        ephemral: true,
-      });
-      return;
-    }
-
     if (!player) {
       i.reply("There is no player connected yet.");
       return;
