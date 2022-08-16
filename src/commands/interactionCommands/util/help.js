@@ -46,7 +46,7 @@ class Help extends Command {
       .setStyle(ButtonStyle.Link)
       .setLabel("Vote Me!")
       .setEmoji("778416296630157333")
-      .setURL(`https://top.gg/bot/477762276389027840/vote`);
+      .setURL(`https://top.gg/bot/${this.client.user.id}/vote`);
 
     const row = new ActionRowBuilder().addComponents([
       inviteButton,
