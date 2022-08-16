@@ -38,9 +38,11 @@ class Info extends Command {
     const nodes = this.client.music.poru.nodes.get("yukkuri");
     
     const nodes2 = this.client.music.poru.nodes.get("yukkuri-2");
-    console.log(nodes2)
-    const player = this.client.music.poru.players;
+    
+    const player = nodes.manager.players.size;
 
+    const player2 = nodes2.manager.players.size;
+    
     const inviteButton = new ButtonBuilder()
       .setStyle(ButtonStyle.Link)
       .setLabel("Invite Me!")
@@ -65,7 +67,7 @@ class Info extends Command {
       .setStyle(ButtonStyle.Link)
       .setLabel("Vote Me!")
       .setEmoji("778416296630157333")
-      .setURL(`https://top.gg/bot/477762276389027840/vote`);
+      .setURL(`https://top.gg/bot/${this.client.user.id}/vote`);
       
       const support = new ButtonBuilder()
       .setStyle(ButtonStyle.Link)
@@ -136,10 +138,10 @@ class Info extends Command {
       .setTitle("Lavalink")
       .addFields([
         {
-          name: "Status",
+          name: "NODE 1",
           value: [
             "**Players**",
-            `\u200b Playing on: ${player.size} servers`,
+            `\u200b Playing on: ${player} servers`,
             "**Memory**",
             `\u200b Used: ${this.formatByteSize(nodes.stats.memory.used)}`,
             `\u200b Free: ${this.formatByteSize(nodes.stats.memory.free)}`,
@@ -152,6 +154,25 @@ class Info extends Command {
               nodes.stats.cpu.lavalinkLoad.toFixed(0)
             )}`,
             `\u200b Uptime: ${ms(nodes.stats.uptime)}`,
+          ].join("\n"),
+        },
+        {
+          name: "NODE 2",
+          value: [
+            "**Players**",
+            `\u200b Playing on: ${player2} servers`,
+            "**Memory**",
+            `\u200b Used: ${this.formatByteSize(nodes2.stats.memory.used)}`,
+            `\u200b Free: ${this.formatByteSize(nodes2.stats.memory.free)}`,
+            `\u200b Allocated: ${this.formatByteSize(
+              nodes2.stats.memory.allocated
+            )}`,
+            "**CPU**",
+            `\u200b Cores: ${nodes2.stats.cpu.cores}`,
+            `\u200b Load: ${this.formatByteSize(
+              nodes2.stats.cpu.lavalinkLoad.toFixed(0)
+            )}`,
+            `\u200b Uptime: ${ms(nodes2.stats.uptime)}`,
           ].join("\n"),
         },
       ]);
