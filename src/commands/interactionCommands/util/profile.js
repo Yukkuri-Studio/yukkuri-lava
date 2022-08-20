@@ -17,9 +17,16 @@ class Profile extends Command {
       userId: i.member.user.id,
     });
 
-    const lastplay = await this.client.db.getAndNull("lastplay", {
+    let lastplay = await this.client.db.getAndNull("lastplay", {
       userId: i.member.user.id,
     });
+    
+    if (!lastplay) {
+      lastplay = new this.client.db.models.lastplay({
+        userId: i.member.user.id
+      })
+      lastplay.save()
+    }
 
     const embed = new EmbedBuilder()
       .setColor("Red")
