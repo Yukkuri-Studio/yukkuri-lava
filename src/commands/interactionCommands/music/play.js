@@ -28,14 +28,23 @@ class Play extends Command {
       );
       return;
     }
+    
+    let db  = await this.client.db.getAndNull("lastplay", { userId: i.member.user.id });
+    
+    if (!db) {
+      db = new this.client.db.models.lastplay({
+        userId: i.member.user.id
+      });
+      db.save();
+    }
 
     const player = this.client.music.poru.createConnection({
       guildId: i.guild.id,
       voiceChannel: memberVoice,
       textChannel: i.channel.id,
       deaf: true,
-      volume: 50,
     });
+    player.setVolume(db.volume);
 
     const resolve = await this.client.music.poru.resolve(
       i.options.getString("track")

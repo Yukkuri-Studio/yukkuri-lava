@@ -26,8 +26,8 @@ class Join extends Command {
       voiceChannel: memberVoice,
       textChannel: i.channel.id,
       deaf: true,
-      volume: 50,
     });
+    player.setVolume(50);
 
     const embed = new EmbedBuilder()
       .setColor("Red")
