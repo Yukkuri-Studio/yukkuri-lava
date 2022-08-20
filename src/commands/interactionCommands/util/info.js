@@ -37,8 +37,6 @@ class Info extends Command {
 
     const nodes = this.client.music.poru.nodes.get("yukkuri");
     
-    const nodes2 = this.client.music.poru.nodes.get("yukkuri-2");
-    
     const player = nodes.manager.players.size;
 
     const player2 = nodes2.manager.players.size;
@@ -154,25 +152,6 @@ class Info extends Command {
               nodes.stats.cpu.lavalinkLoad.toFixed(0)
             )}`,
             `\u200b Uptime: ${ms(nodes.stats.uptime)}`,
-          ].join("\n"),
-        },
-        {
-          name: "NODE 2",
-          value: [
-            "**Players**",
-            `\u200b Playing on: ${player2} servers`,
-            "**Memory**",
-            `\u200b Used: ${this.formatByteSize(nodes2.stats.memory.used)}`,
-            `\u200b Free: ${this.formatByteSize(nodes2.stats.memory.free)}`,
-            `\u200b Allocated: ${this.formatByteSize(
-              nodes2.stats.memory.allocated
-            )}`,
-            "**CPU**",
-            `\u200b Cores: ${nodes2.stats.cpu.cores}`,
-            `\u200b Load: ${this.formatByteSize(
-              nodes2.stats.cpu.lavalinkLoad.toFixed(0)
-            )}`,
-            `\u200b Uptime: ${ms(nodes2.stats.uptime)}`,
           ].join("\n"),
         },
       ]);
