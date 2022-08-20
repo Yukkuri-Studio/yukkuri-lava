@@ -50,9 +50,9 @@ class Profile extends Command {
       },
       {
         name: "<a:headphone:1010593622799949824> Last Play Song",
-        value: lastplay.lastPlayed
+        value: lastplay.lastPlayed.length ? lastplay.lastPlayed
           .map((x) => `[${x.title}](${x.link})`)
-          .join("\n"),
+          .join("\n") : "Nothing"
       },
       {
         name: "<a:dancemusic:1010596974405369858> Music Settings",
