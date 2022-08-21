@@ -12,6 +12,7 @@ class DefaultVolume extends Command {
             .setName("value")
             .setDescription("Insert the default volume between 1-100")
         ),
+        category: "Music"
     });
   }
 
