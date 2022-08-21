@@ -23,8 +23,9 @@ class PoruHandler {
 
   async loadPoru() {
     const nodes = this.client.config.nodes
+    const opt = this.client.config.opt
 
-    this.poru = new Poru(this.client, nodes);
+    this.poru = new Poru(this.client, nodes, opt);
 
     const poru = await this.getFiles(`${this.path}/poru/**/*.js`);
     let i = 0;
