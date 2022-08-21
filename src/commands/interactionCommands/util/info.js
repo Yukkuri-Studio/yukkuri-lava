@@ -38,8 +38,6 @@ class Info extends Command {
     const nodes = this.client.music.poru.nodes.get("yukkuri");
     
     const player = nodes.manager.players.size;
-
-    const player2 = nodes2.manager.players.size;
     
     const inviteButton = new ButtonBuilder()
       .setStyle(ButtonStyle.Link)
